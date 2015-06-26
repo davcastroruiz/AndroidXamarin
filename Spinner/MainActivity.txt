@@ -1,0 +1,173 @@
+using System;
+
+using Android.App;
+using Android.Content;
+using Android.Runtime;
+using Android.Views;
+using Android.Widget;
+using Android.OS;
+
+namespace Convertidor
+{
+	[Activity (Label = "Convertidor", MainLauncher = true, Icon = "@drawable/icon")]
+	public class MainActivity : Activity
+	{
+		EditText insGrados;
+		Spinner spinner;
+		Button btnCalcular;
+		string res="";
+
+
+		protected override void OnCreate (Bundle bundle)
+		{
+			base.OnCreate (bundle);
+
+			// Set our view from the "Main" layout resource
+			SetContentView (Resource.Layout.Main);
+			insGrados = FindViewById<EditText> (Resource.Id.insGrados);
+
+			spinner = FindViewById<Spinner> (Resource.Id.spinner);
+			btnCalcular = FindViewById<Button> (Resource.Id.btnCalcular);
+
+
+			spinner.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs> (spinner_ItemSelected);
+			var adapter = ArrayAdapter.CreateFromResource (
+				this, Resource.Array.grades_array, Android.Resource.Layout.SimpleSpinnerItem);
+
+			adapter.SetDropDownViewResource (Android.Resource.Layout.SimpleSpinnerDropDownItem);
+			spinner.Adapter = adapter;
+
+
+			btnCalcular.Click += btnCacular_Click;
+			insGrados.Click += textOn_Click;
+		}
+
+		private void textOn_Click(object sender, EventArgs e)
+			{
+			insGrados.Text = "";
+
+		}
+		private void btnCacular_Click(object sender, EventArgs e)
+		{
+
+			string operacion = 
+				spinner.GetItemAtPosition (spinner.SelectedItemPosition).ToString ();
+			double cantidad = 0;
+			double.TryParse(insGrados.Text, out cantidad);
+
+
+			Calculo(operacion, cantidad);
+
+		}
+
+
+		private void spinner_ItemSelected (object sender, AdapterView.ItemSelectedEventArgs e)
+		{
+			/*Spinner spinner = (Spinner)sender;
+
+			string toast = string.Format ("Grados: {0}", spinner.GetItemAtPosition (e.Position));
+			Toast.MakeText (this, res, ToastLength.Long).Show ();*/
+
+			string operacion = 
+				spinner.GetItemAtPosition (spinner.SelectedItemPosition).ToString ();
+			double cantidad = 0;
+
+			double.TryParse(insGrados.Text, out cantidad);
+
+
+			Calculo(operacion, cantidad);
+
+		
+		}
+
+		private string Calculo(string operacion, double numero)
+		{  
+			if (insGrados.Text == "") {
+				res = elegir(operacion,(0));
+				Toast.MakeText (this,res +" ° " , ToastLength.Long).Show ();
+				return res;
+
+			}
+			else{
+			res = elegir(operacion,double.Parse(insGrados.Text));
+
+			Toast.MakeText (this,res +" ° " , ToastLength.Long).Show ();
+		
+
+
+			return res;
+			}
+		}
+
+
+		public string elegir(string texto,double a)
+		{
+			string r = "";
+			switch (texto)
+			{
+			case "Celsius a Fahrenheit":
+				{
+
+					double x = a*1.8 + 32;
+					r = x.ToString();
+
+				}
+				break;
+
+			case "Celsius a Kelvin":
+				{
+
+					double x = a + 273.15;
+					r = x.ToString();
+
+				}
+				break;
+
+			case "Fahrenheit a Celsius":
+				{
+
+					double x = (a -32)/1.8;
+					r = x.ToString();
+
+				}
+				break;
+
+			case "Fahrenheit a Kelvin":
+				{
+
+					double x = ((a -32)/1.8) + 273.15;
+					r = x.ToString();
+
+				}
+				break;
+
+
+			case "Kelvin a Celsius":
+				{
+
+					double x = a - 273.15;
+					r = x.ToString();
+
+				}
+				break;
+
+
+			case "Kelvin a Fahrenheit":
+				{
+
+					double x = (a - 273.15)* 1.8 + 32;
+					r = x.ToString();
+
+				}
+				break;
+
+
+
+					}
+			return r;
+		}
+
+	}
+}
+
+

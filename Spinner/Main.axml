@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <TextView
+        android:text="@string/lbl1"
+        android:layout_width="match_parent"
+        android:layout_height="71.1dp"
+        android:id="@+id/textView1"
+        android:textColor="@android:color/holo_blue_dark"
+        android:background="@android:color/holo_orange_light"
+        android:gravity="center"
+        android:textSize="30dp" />
+    <EditText
+        android:inputType="numberDecimal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/insGrados"
+        android:numeric="decimal"
+        android:maxLength="5"
+        android:text="0"
+        android:onClick="@+id/insGrados" />
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:prompt="@string/spinner_prompt"
+        android:tag="@string/spinner_prompt" />
+    <Button
+        android:id="@+id/btnCalcular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnCalcular"
+        android:layout_marginTop="0.0dp" />
+</LinearLayout>
